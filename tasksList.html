@@ -39,24 +39,32 @@
               <div v-for=" tarefa in tasks" class="card horizontal">
                 <div class="card-stacked">
                   <div class="card-content">
-                    <p>{{tarefa.title}}</p>
+                    <p>
+                      {{tarefa.title}}
+                      <span
+                        class="new badge data-badge-caption light-blue lighten-2"
+                      >
+                        {{ tarefa.dueTo }}
+                      </span>
+                    </p>
                   </div>
                   <span class="projeto">{{tarefa.project}}</span>
                   <div class="card-action">
-                    <a @click="editTasks(tarefa.id)">Edit Task</a>
+                    <a
+                      ><i
+                        class="fa-solid fa-pen-to-square"
+                        @click="editTasks(tarefa.id)"
+                      ></i
+                    ></a>
+                    <a
+                      ><i
+                        class="fa-solid fa-trash-can"
+                        @click="deleteTasks(tarefa.id)"
+                      ></i
+                    ></a>
                   </div>
                 </div>
-                <div class="delete">
-                  <button
-                    class="btn-floating btn-large red"
-                    @click="deleteTasks(tarefa.id)"
-                  >
-                    <i class="fa-regular fa-trash fa-solid"></i>
-                  </button>
-                </div>
               </div>
-            </div>
-            <div class="add">
               <button
                 class="btn-floating btn-large waves-effect waves-light red"
                 @click="modoAdicionar = true"
@@ -199,7 +207,8 @@
                   <a
                     class="waves-effect waves-light btn-large"
                     id="btnSave"
-                    @click="addTasks"
+                    @click="printTask"
+                    @click="editTasks"
                   >
                     Save
                   </a>

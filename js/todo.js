@@ -29,7 +29,7 @@ var app = new Vue({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       };
-      fetch("http://localhost:3000/tasks", dataConverted).then(() => {
+      fetch("http://localhost:3000/tasks/", dataConverted).then(() => {
         this.getTasks();
       });
     },
@@ -47,6 +47,20 @@ var app = new Vue({
         this.getTasks();
       });
     },
+    printTask() {
+      let dataConverted = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: this.task.tempTitle,
+          project: this.task.tempProject,
+          dueTo: this.task.tempDueTo,
+        }),
+      };
+      fetch(`http://localhost:3000/tasks/${this.task.id}`, dataConverted).then(() => {
+        this.getTasks();
+      });
+    }
   },
   created() {
     this.getTasks();
