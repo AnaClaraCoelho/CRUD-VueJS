@@ -19,7 +19,7 @@
       referrerpolicy="no-referrer"
     />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <div id="app">
@@ -27,31 +27,186 @@
         <div class="nav-wrapper"></div>
       </nav>
 
-      <div class="container">
+      <input type="text" />
+
+      <div class="container" v-show="!modoEditar">
         <div class="section">
           <!--   Icon Section   -->
-          <div class="row">
+          <div class="row" v-show="!modoAdicionar">
             <div class="col s12" id="elTasks">
               <!-- New tasks area-->
-            <!-- card de tarefa que repete para cada item do array -->
-                <div v-for=" tarefa in tasks"class="card horizontal">
-                    <div class="card-stacked">
-                    <div class="card-content">
-                        <p>{{tarefa.title}} <span class="projeto">{{tarefa.project}}</span></p>
-                    </div>
-                    <div class="card-action">
-                        <a href="./tasksEdit.html" @click="editTasks">Edit Task</a>
-                    </div>
-                    </div>
+              <!-- card de tarefa que repete para cada item do array -->
+              <div v-for=" tarefa in tasks" class="card horizontal">
+                <div class="card-stacked">
+                  <div class="card-content">
+                    <p>{{tarefa.title}}</p>
+                  </div>
+                  <span class="projeto">{{tarefa.project}}</span>
+                  <div class="card-action">
+                    <a @click="editTasks(tarefa.id)">Edit Task</a>
+                  </div>
                 </div>
+                <div class="delete">
+                  <button
+                    class="btn-floating btn-large red"
+                    @click="deleteTasks(tarefa.id)"
+                  >
+                    <i class="fa-regular fa-trash fa-solid"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="add">
+              <button
+                class="btn-floating btn-large waves-effect waves-light red"
+                @click="modoAdicionar = true"
+              >
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="add">
-          <button
-            class="btn-floating btn-large waves-effect waves-light red"
-            href="tasksNew.html" 
-            ><i class="fa-solid fa-plus"></i
-          ></button>
+
+        <!-- NOVA TAREFA -->
+
+        <div class="row" v-show="modoAdicionar">
+          <div class="col s12" id="elTasks">
+            <!-- New tasks area-->
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <h2>New Task</h2>
+                  <form>
+                    <div class="input-field col s12">
+                      <input
+                        placeholder="Title"
+                        id="title"
+                        type="text"
+                        class="validate"
+                        required
+                        v-model="task.tempTitle"
+                      />
+                      <label for="title">Title</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                      <select
+                        style="display: block; opacity: 0.7"
+                        id="project"
+                        v-model="task.tempProject"
+                      >
+                        <option style="color: gray" value="" disabled selected>
+                          Choose your option
+                        </option>
+                        <option style="font-weight: 600" value="Estudos">
+                          Estudos
+                        </option>
+                        <option style="font-weight: 600" value="Financeiro">
+                          Financeiro
+                        </option>
+                        <option style="font-weight: 600" value="Trabalho">
+                          Trabalho
+                        </option>
+                      </select>
+                      <!-- <label for="project">Pick a Project</label> -->
+                    </div>
+
+                    <div class="input-field col s12">
+                      <input
+                        type="date"
+                        class="datepicker"
+                        id="dueTo"
+                        v-model="task.tempDueTo"
+                      />
+                      <label for="dueTo">Date due to</label>
+                    </div>
+
+                    <a
+                      class="waves-effect waves-light btn-large"
+                      id="btnSave"
+                      @click="addTasks"
+                    >
+                      Save
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="page-footer orange darken-3">
+          <div class="footer-copyright">
+            <div class="container">© 2022 Frontend</div>
+          </div>
+        </footer>
+      </div>
+
+      <!-- EDIT TAREFA -->
+
+      <div class="row" v-show="modoEditar">
+        <div class="col s12" id="elTasks">
+          <!-- New tasks area-->
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <h2>Edit Task</h2>
+                <form>
+                  <div class="input-field col s12">
+                    <input
+                      placeholder="Title"
+                      id="title"
+                      type="text"
+                      class="validate"
+                      required
+                      v-model="task.tempTitle"
+                    />
+                    <label for="title">Title</label>
+                  </div>
+
+                  <div class="input-field col s12">
+                    <select
+                      style="display: block; opacity: 0.7"
+                      id="project"
+                      v-model="task.tempProject"
+                    >
+                      <option style="color: gray" value="" disabled selected>
+                        Choose your option
+                      </option>
+                      <option style="font-weight: 600" value="Estudos">
+                        Estudos
+                      </option>
+                      <option style="font-weight: 600" value="Financeiro">
+                        Financeiro
+                      </option>
+                      <option style="font-weight: 600" value="Trabalho">
+                        Trabalho
+                      </option>
+                    </select>
+                    <!-- <label for="project">Pick a Project</label> -->
+                  </div>
+
+                  <div class="input-field col s12">
+                    <input
+                      type="date"
+                      class="datepicker"
+                      id="dueTo"
+                      v-model="task.tempDueTo"
+                    />
+                    <label for="dueTo">Date due to</label>
+                  </div>
+
+                  <a
+                    class="waves-effect waves-light btn-large"
+                    id="btnSave"
+                    @click="addTasks"
+                  >
+                    Save
+                  </a>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -65,6 +220,7 @@
     <!-- Materialize JavaScript CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/todo.js"></script>
     <script src="js/materialize.min.js"></script>
   </body>
