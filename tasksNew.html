@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Todo List</title>
+
+    <!-- Materialize CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Fontawesome 6 CND-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <link
+      href="./css/style.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+  </head>
+  <body>
+    <nav class="orange darken-2">
+      <div class="nav-wrapper"></div>
+    </nav>
+
+    <div id="app" class="container">
+      <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+          <div class="col s12" id="elTasks">
+            <!-- New tasks area-->
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <h2>New Task</h2>
+                  <form>
+                    <div class="input-field col s12">
+                      <input
+                        placeholder="Title"
+                        id="title"
+                        type="text"
+                        class="validate"
+                        required
+                        v-model="tempTitle"
+                      />
+                      <label for="title">Title</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                      <select
+                        style="display: block; opacity: 0.7"
+                        id="project"
+                        v-model="tempProject"
+                      >
+                        <option style="color: gray" value="" disabled selected>
+                          Choose your option
+                        </option>
+                        <option style="font-weight: 600" value="Estudos">
+                          Estudos
+                        </option>
+                        <option style="font-weight: 600" value="Financeiro">
+                          Financeiro
+                        </option>
+                        <option style="font-weight: 600" value="Trabalho">
+                          Trabalho
+                        </option>
+                      </select>
+                      <!-- <label for="project">Pick a Project</label> -->
+                    </div>
+
+                    <div class="input-field col s12">
+                      <input
+                        type="date"
+                        class="datepicker"
+                        id="dueTo"
+                        v-model="tempDueTo"
+                      />
+                      <label for="dueTo">Date due to</label>
+                    </div>
+
+                    <a
+                      class="waves-effect waves-light btn-large"
+                      id="btnSave"
+                      @click="addTasks"
+                    >
+                      Save
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="page-footer orange darken-3">
+      <div class="footer-copyright">
+        <div class="container">© 2022 Frontend</div>
+      </div>
+    </footer>
+
+    <!-- Materialize JavaScript CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/todo.js"></script>
+    <script src="js/materialize.min.js"></script>
+  </body>
+</html>
