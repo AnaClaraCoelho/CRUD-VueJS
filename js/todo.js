@@ -1,6 +1,8 @@
 var app = new Vue({
   el: "#app",
   data: {
+    search: '',
+    loading: false,
     tasks: [],
     task: {
       "tempTitle": null,
@@ -12,31 +14,32 @@ var app = new Vue({
   },
   methods: {
     getTasks() {
+      this.loading = true
       fetch("http://localhost:3000/tasks")
         .then((response) => response.json())
         .then((tarefasJson) => {
           this.tasks = tarefasJson;
+          this.loading = false
         });
     },
     addTasks() {
-      let data = {
-        title: this.task.tempTitle,
-        project: this.task.tempProject,
-        dueTo: this.task.tempDueTo,
-      };
       let dataConverted = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          title: this.task.tempTitle,
+          project: this.task.tempProject,
+          dueTo: this.task.tempDueTo,
+        }),
       };
       fetch("http://localhost:3000/tasks/", dataConverted).then(() => {
         this.getTasks();
+        this.modoAdicionar = false
       });
     },
     editTasks(tarefaId) {
       this.modoEditar = true;
       const tasking = this.tasks.filter((t) => t.id == tarefaId)[0];
-      console.log(tasking)
       this.task.id = tasking.id
       this.task.tempTitle = tasking.title
       this.task.tempProject = tasking.project
@@ -57,12 +60,23 @@ var app = new Vue({
           dueTo: this.task.tempDueTo,
         }),
       };
-      fetch(`http://localhost:3000/tasks/${this.task.id}`, dataConverted).then(() => {
-        this.getTasks();
-      });
-    }
+      fetch(`http://localhost:3000/tasks/${this.task.id}`, dataConverted).then(
+        () => {
+          this.getTasks();
+          this.modoEditar = false
+        });
+    },
+
   },
   created() {
     this.getTasks();
+  },
+
+  computed: {
+    searchBar() {
+      return this.tasks.filter((el) =>
+        el.title.toLowerCase().includes(this.search.toLowerCase())
+      )
+    }
   },
 });

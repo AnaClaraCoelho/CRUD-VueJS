@@ -3,16 +3,22 @@
     {
       "id": 1,
       "title": "Estudar Flexbox",
-      "dueTo": "2022-05-01T12:00:00.000Z",
+      "dueTo": "2022-05-01",
       "project": "Estudos",
       "usuario": "joao@example.com"
     },
     {
       "id": 2,
       "title": "Estudar Float",
-      "dueTo": "2022-05-01T12:00:00.000Z",
+      "dueTo": "2022-05-01",
       "project": "Estudos",
       "usuario": "joao@example.com"
+    },
+    {
+      "title": "NOVO ALTERADO 2",
+      "project": "Estudos",
+      "dueTo": "2022-02-02",
+      "id": 3
     }
   ]
 }
